@@ -1,3 +1,26 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["airbnb", "airbnb/hooks", "next/core-web-vitals"],
+  "rules": {
+    "quotes": "off",
+    "no-console": "error",
+    "no-debugger": "error",
+    "react/jsx-filename-extension": [
+      2,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "indent": ["error", 2],
+    "object-curly-newline": "off",
+    "comma-dangle": "off",
+    
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
 }
