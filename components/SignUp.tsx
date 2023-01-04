@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Container, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { ISignUpForm } from "../../interface";
+import { ISignUpForm } from "../interface";
 
 function SignUp() {
   const [signupBody, setSignupBody] = useState<ISignUpForm>({
@@ -14,7 +14,7 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     e.preventDefault();
     const { name, value } = e.target;

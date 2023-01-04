@@ -1,7 +1,7 @@
 import { Container, TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import { ILoginForm } from "../../interface";
+import { ILoginForm } from "../interface";
 
 function Login() {
   const [loginBody, setLoginBody] = useState<ILoginForm>({
