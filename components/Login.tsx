@@ -65,7 +65,6 @@ function Login() {
 
       <LoadingButton
         loading={loading}
-        loadingPosition="start"
         variant="contained"
         className="w-full"
         onClick={submitForm}
