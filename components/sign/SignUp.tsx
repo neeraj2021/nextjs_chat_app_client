@@ -1,7 +1,8 @@
 import { LoadingButton } from "@mui/lab";
 import { Container, TextField } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
-import { ISignUpForm } from "../interface";
+import { ISignUpForm } from "../../interface";
 
 function SignUp() {
   const [signupBody, setSignupBody] = useState<ISignUpForm>({
@@ -21,10 +22,19 @@ function SignUp() {
     setSignupBody({ ...signupBody, [name]: value });
   };
 
-  const submitForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const submitForm = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    setLoading(true);
-    setLoading(false);
+    try {
+      setLoading(true);
+      await axios.post("http://localhost:3001/api/v1/user/signup", signupBody);
+    } catch (err: any) {
+      // eslint-disable-next-line no-console
+      console.error(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

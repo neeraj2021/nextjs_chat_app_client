@@ -1,6 +1,6 @@
 import React from "react";
-import ChatBox from "../components/ChatBox";
-import MyChats from "../components/MyChats";
+import ChatBox from "../components/chat/ChatBox";
+import MyChats from "../components/chat/MyChats";
 import SideDrawer from "../components/SideDrawer";
 
 function ChatPage() {

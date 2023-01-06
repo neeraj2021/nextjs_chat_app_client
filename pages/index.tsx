@@ -1,7 +1,7 @@
 import { Container, Paper, Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
-import Login from "../components/Login";
-import SignUp from "../components/SignUp";
+import Login from "../components/sign/Login";
+import SignUp from "../components/sign/SignUp";
 import { FormType } from "../constants";
 
 function Home() {

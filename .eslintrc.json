@@ -4,7 +4,7 @@
     "linebreak-style": "off",
     "operator-linebreak": "off",
     "quotes": "off",
-    "no-console": "error",
+    "no-console": "off",
     "no-debugger": "error",
     "react/jsx-filename-extension": [
       2,
