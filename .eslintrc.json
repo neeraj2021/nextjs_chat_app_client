@@ -1,8 +1,9 @@
 {
-  "extends": ["airbnb", "airbnb/hooks", "next/core-web-vitals"],
+  "extends": ["airbnb", "airbnb/hooks", "next/core-web-vitals", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
+    "no-param-reassign": "off",
     "linebreak-style": "off",
-    "operator-linebreak": "off",
     "quotes": "off",
     "no-console": "off",
     "no-debugger": "error",

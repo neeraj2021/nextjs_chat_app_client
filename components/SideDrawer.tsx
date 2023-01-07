@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
@@ -11,13 +11,21 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
-  Skeleton,
 } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { allUsers } from "../selectors";
+import { selectUser } from "../slices/userSlice";
 
 function DrawerList() {
-  const [search, setSearch] = useState("");
+  const users = useSelector(allUsers);
+  const dispatch = useDispatch();
 
-  const handleClick = () => {};
+  const [search, setSearch] = useState("");
+  const [filteredUser, setFilteredUser] = useState(users);
+
+  useEffect(() => {
+    setFilteredUser(() => users.filter((user) => user.email.includes(search)));
+  }, [search, users]);
 
   return (
     <div>
@@ -26,15 +34,8 @@ function DrawerList() {
         onChange={(e) => {
           setSearch(e.target.value);
         }}
-        placeholder="Search by name or email"
+        placeholder="Search by email"
         size="small"
-        InputProps={{
-          endAdornment: (
-            <IconButton onClick={handleClick}>
-              <SearchIcon className="text-blue-600" />
-            </IconButton>
-          ),
-        }}
       />
 
       <List
@@ -43,24 +44,14 @@ function DrawerList() {
           <ListSubheader component="div">Search Results</ListSubheader>
         }
       >
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <ListItemButton>
-          <ListItemText primary="First User" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary="First User" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary="First User" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary="First User" />
-        </ListItemButton>
+        {filteredUser.map((user) => (
+          <ListItemButton
+            key={user.id}
+            onClick={() => dispatch(selectUser(user))}
+          >
+            <ListItemText primary={user.name} />
+          </ListItemButton>
+        ))}
       </List>
     </div>
   );
@@ -90,7 +81,7 @@ function SideDrawer() {
         </Button>
       </Tooltip>
 
-      <span className="text-blue-600">Next Chat App</span>
+      <span className="text-blue-600 text-2xl">Next Chat App</span>
 
       <IconButton>
         <NotificationsIcon />
