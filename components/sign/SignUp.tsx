@@ -3,6 +3,7 @@ import { Container, TextField } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
 import { ISignUpForm } from "../../interface";
+import { getAxiosError, signUpFormValidation } from "../../utils";
 
 function SignUp() {
   const [signupBody, setSignupBody] = useState<ISignUpForm>({
@@ -26,12 +27,19 @@ function SignUp() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+
+    if (!signUpFormValidation(signupBody)) {
+      alert("Please fill all details");
+      return;
+    }
+
     try {
       setLoading(true);
       await axios.post("http://localhost:3001/api/v1/user/signup", signupBody);
+      alert("Sign up sucessfully");
     } catch (err: any) {
-      // eslint-disable-next-line no-console
-      console.error(err.message);
+      const error = getAxiosError(err);
+      alert(error);
     } finally {
       setLoading(false);
     }

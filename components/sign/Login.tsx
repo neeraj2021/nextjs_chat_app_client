@@ -1,13 +1,17 @@
 import { Container, TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
+import axios from "axios";
+import { useRouter } from "next/router";
 import { ILoginForm } from "../../interface";
+import { getAxiosError } from "../../utils";
 
 function Login() {
   const [loginBody, setLoginBody] = useState<ILoginForm>({
     email: "",
     password: "",
   });
+  const router = useRouter();
 
   const [loading, setLoading] = useState(false);
 
@@ -26,9 +30,24 @@ function Login() {
     });
   };
 
-  const submitForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const submitForm = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    setLoading(true);
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        "http://localhost:3001/api/v1/user/login",
+        loginBody
+      );
+      localStorage.setItem("loggedInUser", JSON.stringify(data));
+      router.push("/chatpage");
+    } catch (err: any) {
+      const error = getAxiosError(err);
+      alert(error);
+    } finally {
+      setLoading(false);
+    }
 
     setLoading(false);
   };

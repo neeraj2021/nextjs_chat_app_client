@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   Button,
   Tooltip,
-  IconButton,
   Drawer,
   TextField,
   List,
@@ -13,7 +11,7 @@ import {
   ListSubheader,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { allUsers } from "../selectors";
+import { allUsers, loggedInUser } from "../selectors";
 import { selectUser } from "../slices/userSlice";
 
 function DrawerList() {
@@ -59,6 +57,7 @@ function DrawerList() {
 
 function SideDrawer() {
   const [showDrawer, setShowDrawer] = useState(false);
+  const _loggedInUser = useSelector(loggedInUser);
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -83,9 +82,7 @@ function SideDrawer() {
 
       <span className="text-blue-600 text-2xl">Next Chat App</span>
 
-      <IconButton>
-        <NotificationsIcon />
-      </IconButton>
+      <span className="text-blue-600">Welcome {_loggedInUser.name}</span>
 
       <Drawer
         open={showDrawer}

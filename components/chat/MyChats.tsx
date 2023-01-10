@@ -1,11 +1,17 @@
 import { List, ListItemButton, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import axiosInstance from "../../axios";
 import ApiEndPoints from "../../constants/ApiEndPoints";
-import { IUser } from "../../interface";
+import { ILoggedinUser, IUser } from "../../interface";
 import LoadingList from "../LoadingList";
-import { selectUser, setAllUsers } from "../../slices/userSlice";
+import {
+  selectUser,
+  setAllUsers,
+  setLoggedInUser,
+} from "../../slices/userSlice";
+import { loggedInUser } from "../../selectors";
 
 function UserList({ userList }: { userList: IUser[] }) {
   const dispatch = useDispatch();
@@ -32,13 +38,29 @@ function UserList({ userList }: { userList: IUser[] }) {
 function MyChats() {
   const [userList, setUserList] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const user = localStorage.getItem("loggedInUser");
+    if (user) {
+      const body: ILoggedinUser = JSON.parse(user);
+      dispatch(setLoggedInUser(body));
+    } else {
+      router.push("/");
+    }
+  }, []);
+
+  const _loggedInUser = useSelector(loggedInUser);
+
   useEffect(() => {
     (async () => {
       try {
         setLoading(true);
-        const { data } = await axiosInstance.get(ApiEndPoints.users);
+        const { data } = await axiosInstance.get(
+          `${ApiEndPoints.allUsers}?email=${_loggedInUser.email}`
+        );
         setUserList(data);
         dispatch(setAllUsers(data));
       } catch (err: any) {
@@ -47,7 +69,7 @@ function MyChats() {
         setLoading(false);
       }
     })();
-  }, [dispatch]);
+  }, [_loggedInUser.email, dispatch]);
 
   return (
     <div className="flex flex-col items-center p-3 bg-white rounded-lg w-1/4">

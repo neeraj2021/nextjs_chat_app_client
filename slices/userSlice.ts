@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../interface";
+import { ILoggedinUser, IUser } from "../interface";
 
 interface IUserSlice {
   allUsers: IUser[];
   selectedUser: IUser;
+  loggedInUser: ILoggedinUser;
 }
 
 const initialState: IUserSlice = {
@@ -11,6 +12,10 @@ const initialState: IUserSlice = {
   selectedUser: {
     name: "",
     id: 0,
+    email: "",
+  },
+  loggedInUser: {
+    name: "",
     email: "",
   },
 };
@@ -28,8 +33,13 @@ export const userSlice = createSlice({
     setAllUsers: (state, { payload }: PayloadAction<IUser[]>) => {
       state.allUsers = payload;
     },
+
+    setLoggedInUser: (state, { payload }: PayloadAction<ILoggedinUser>) => {
+      state.loggedInUser.name = payload.name;
+      state.loggedInUser.email = payload.email;
+    },
   },
 });
 
-export const { selectUser, setAllUsers } = userSlice.actions;
+export const { selectUser, setAllUsers, setLoggedInUser } = userSlice.actions;
 export default userSlice.reducer;
