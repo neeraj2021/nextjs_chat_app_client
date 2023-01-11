@@ -12,9 +12,24 @@ import {
   setLoggedInUser,
 } from "../../slices/userSlice";
 import { loggedInUser } from "../../selectors";
+import socket from "../../service/socket";
 
 function UserList({ userList }: { userList: IUser[] }) {
   const dispatch = useDispatch();
+
+  const _loggedInUser = useSelector(loggedInUser);
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    user: IUser
+  ) => {
+    e.preventDefault();
+    dispatch(selectUser(user));
+    socket.emit("joinRoom", {
+      from: _loggedInUser.email,
+      to: user.email,
+    });
+  };
 
   return (
     <List dense className="flex flex-col gap-y-2 p-0">
@@ -22,7 +37,7 @@ function UserList({ userList }: { userList: IUser[] }) {
         <Paper key={user.id}>
           <ListItemButton
             className="rounded-xl"
-            onClick={() => dispatch(selectUser(user))}
+            onClick={(e) => handleClick(e, user)}
           >
             <div className="flex flex-col flex-wrap">
               <span className="font-medium text-base">{user.name}</span>
@@ -50,7 +65,7 @@ function MyChats() {
     } else {
       router.push("/");
     }
-  }, []);
+  }, [dispatch, router]);
 
   const _loggedInUser = useSelector(loggedInUser);
 
