@@ -13,6 +13,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { allUsers, loggedInUser } from "../selectors";
 import { selectUser } from "../slices/userSlice";
+import { IUser } from "../interface";
 
 function DrawerList() {
   const users = useSelector(allUsers);
@@ -24,6 +25,14 @@ function DrawerList() {
   useEffect(() => {
     setFilteredUser(() => users.filter((user) => user.email.includes(search)));
   }, [search, users]);
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    user: IUser
+  ) => {
+    e.preventDefault();
+    dispatch(selectUser(user));
+  };
 
   return (
     <div>
@@ -43,11 +52,8 @@ function DrawerList() {
         }
       >
         {filteredUser.map((user) => (
-          <ListItemButton
-            key={user.id}
-            onClick={() => dispatch(selectUser(user))}
-          >
-            <ListItemText primary={user.name} />
+          <ListItemButton key={user.id} onClick={(e) => handleClick(e, user)}>
+            <ListItemText primary={user.email} />
           </ListItemButton>
         ))}
       </List>

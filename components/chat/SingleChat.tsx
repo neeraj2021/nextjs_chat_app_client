@@ -55,6 +55,7 @@ function SingleChat() {
         ))}
       </div>
       <TextField
+        autoComplete="off"
         value={message}
         size="small"
         onChange={(e) => setMessage(e.target.value)}

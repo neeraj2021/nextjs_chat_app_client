@@ -11,13 +11,14 @@ import {
   setAllUsers,
   setLoggedInUser,
 } from "../../slices/userSlice";
-import { loggedInUser } from "../../selectors";
+import { loggedInUser, selectedUser } from "../../selectors";
 import socket from "../../service/socket";
 
 function UserList({ userList }: { userList: IUser[] }) {
   const dispatch = useDispatch();
 
   const _loggedInUser = useSelector(loggedInUser);
+  const _selectedUser = useSelector(selectedUser);
 
   const handleClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -38,6 +39,7 @@ function UserList({ userList }: { userList: IUser[] }) {
           <ListItemButton
             className="rounded-xl"
             onClick={(e) => handleClick(e, user)}
+            selected={user.email === _selectedUser.email}
           >
             <div className="flex flex-col flex-wrap">
               <span className="font-medium text-base">{user.name}</span>
