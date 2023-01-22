@@ -30,6 +30,13 @@ function Login() {
     });
   };
 
+  const setGuest2Credential = () => {
+    setLoginBody({
+      email: "guest2@gmail.com",
+      password: "1234",
+    });
+  };
+
   const submitForm = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -91,13 +98,23 @@ function Login() {
         Login
       </LoadingButton>
 
-      <Button
-        variant="contained"
-        className="w-full bg-red-500"
-        onClick={setGuestCredential}
-      >
-        Get Guest User Credentials
-      </Button>
+      <div className="flex flex-row gap-2">
+        <Button
+          variant="contained"
+          className="w-full bg-red-500"
+          onClick={setGuestCredential}
+        >
+          Set Guest User Credentials
+        </Button>
+
+        <Button
+          variant="contained"
+          className="w-full bg-green-800"
+          onClick={setGuest2Credential}
+        >
+          Set Guest 2 User Credentials
+        </Button>
+      </div>
     </Container>
   );
 }
