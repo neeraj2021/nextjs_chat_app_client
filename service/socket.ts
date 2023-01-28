@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // const SOCKET_URL = "http://localhost:3001/";
-const SOCKET_URL = String(process.env.NEXT_PUBLIC_API_BASE_URL);
-console.log("Socket url = ", SOCKET_URL);
+const SOCKET_URL = 'https://nestjs-chat-server.cyclic.app/';
+
 const socket = io(SOCKET_URL);
 export default socket;
