@@ -1,7 +1,7 @@
 import { LoadingButton } from "@mui/lab";
 import { Container, TextField } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
+import axiosInstance from "../../axios";
 import { ISignUpForm } from "../../interface";
 import { getAxiosError, signUpFormValidation } from "../../utils";
 
@@ -35,7 +35,7 @@ function SignUp() {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:3001/api/v1/user/signup", signupBody);
+      await axiosInstance.post("/api/v1/user/signup", signupBody);
       alert("Sign up sucessfully");
     } catch (err: any) {
       const error = getAxiosError(err);

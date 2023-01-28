@@ -1,10 +1,10 @@
 import { Container, TextField, Button } from "@mui/material";
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { ILoginForm } from "../../interface";
 import { getAxiosError } from "../../utils";
+import axiosInstance from "../../axios";
 
 function Login() {
   const [loginBody, setLoginBody] = useState<ILoginForm>({
@@ -43,8 +43,8 @@ function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const { data } = await axios.post(
-        "http://localhost:3001/api/v1/user/login",
+      const { data } = await axiosInstance.post(
+        "/api/v1/user/login",
         loginBody
       );
       localStorage.setItem("loggedInUser", JSON.stringify(data));
